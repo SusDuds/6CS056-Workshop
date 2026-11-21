@@ -7,14 +7,14 @@
 
 @section('content')
     <div class="overview-links">
-        <a href="/students" class="overview-link">
+        <a href="{{ route('students.index') }}" class="overview-link">
             <div>
                 <strong>Students</strong>
                 <span>View and manage student records</span>
             </div>
             <span class="overview-arrow" aria-hidden="true">→</span>
         </a>
-        <a href="/courses" class="overview-link">
+        <a href="{{ route('courses.index') }}" class="overview-link">
             <div>
                 <strong>Courses</strong>
                 <span>View and manage course records</span>

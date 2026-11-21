@@ -6,18 +6,14 @@
 @section('description', 'Manage course records.')
 
 @section('actions')
-    <a href="/courses/create" class="button button-primary">Add course</a>
+    <a href="{{ route('courses.create') }}" class="button button-primary">Add course</a>
 @endsection
 
 @section('content')
-    @if(session('success'))
-        <div class="alert">{{ session('success') }}</div>
-    @endif
-
     <section class="panel">
         <div class="panel-header">
             <h2 class="panel-title">All courses</h2>
-            <span class="panel-meta">{{ count($courses) }} {{ count($courses) === 1 ? 'record' : 'records' }}</span>
+            <span class="panel-meta">{{ $courses->count() }} {{ $courses->count() === 1 ? 'record' : 'records' }}</span>
         </div>
         <div class="table-wrap">
             <table class="data-table">
@@ -44,13 +40,9 @@
                             <td><span class="status {{ $course->is_active ? '' : 'inactive' }}">{{ $course->is_active ? 'Active' : 'Inactive' }}</span></td>
                             <td class="actions-cell">
                                 <div class="row-actions">
-                                    <a href="/courses/{{ $course->id }}" class="text-action">View</a>
-                                    <a href="/courses/{{ $course->id }}/edit" class="text-action">Edit</a>
-                                    <form action="/courses/{{ $course->id }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this course?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-action danger">Delete</button>
-                                    </form>
+                                    <a href="{{ route('courses.show', $course) }}" class="text-action">View</a>
+                                    <a href="{{ route('courses.edit', $course) }}" class="text-action">Edit</a>
+                                    <x-delete-form :action="route('courses.destroy', $course)" confirm="Delete this course?" />
                                 </div>
                             </td>
                         </tr>
@@ -60,7 +52,7 @@
                                 <div class="empty-state">
                                     <strong>No courses found</strong>
                                     <p>There are no course records yet.</p>
-                                    <a href="/courses/create" class="button">Add course</a>
+                                    <a href="{{ route('courses.create') }}" class="button">Add course</a>
                                 </div>
                             </td>
                         </tr>
