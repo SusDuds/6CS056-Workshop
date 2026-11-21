@@ -6,14 +6,10 @@
 @section('description', 'Course details.')
 
 @section('actions')
-    <a href="/courses/{{ $course->id }}/edit" class="button button-primary">Edit course</a>
+    <a href="{{ route('courses.edit', $course) }}" class="button button-primary">Edit course</a>
 @endsection
 
 @section('content')
-    @if(session('success'))
-        <div class="alert">{{ session('success') }}</div>
-    @endif
-
     <section class="panel detail-panel">
         <dl class="detail-grid">
             <div class="detail-item"><dt>Course ID</dt><dd>#{{ $course->id }}</dd></div>
@@ -25,12 +21,8 @@
             <div class="detail-item detail-item-full"><dt>Description</dt><dd>{{ $course->description ?: '—' }}</dd></div>
         </dl>
         <div class="detail-actions">
-            <a href="/courses" class="button">Back to courses</a>
-            <form action="/courses/{{ $course->id }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this course?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="button button-danger">Delete course</button>
-            </form>
+            <a href="{{ route('courses.index') }}" class="button">Back to courses</a>
+            <x-delete-form :action="route('courses.destroy', $course)" label="Delete course" button-class="button button-danger" confirm="Delete this course?" />
         </div>
     </section>
 @endsection
